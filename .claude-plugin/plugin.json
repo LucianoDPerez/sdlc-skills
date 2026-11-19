@@ -1,7 +1,7 @@
 {
   "name": "sdlc-skills",
   "description": "One perfect skill per SDLC stage — discovery to production: discovery, PRD, UX/UI, RFC, ADR, ERD, API design, security threat modeling, QA, release, plus an orchestrator that enforces stage gates. Works with Claude Code and any Agent Skills runtime (OpenCode, Codex, Gemini CLI).",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "LucianoDPerez"
   },

@@ -4,6 +4,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-19
+
 ### Changed
 
 - `sdlc` (1.3 → 1.4): enforcement is now deterministic — new `assets/verify-gate.sh` checks artifact existence, the `Approved by: <name> (<role>), <date>` line, and every `path @ <sha>` citation with a real `git diff`; the orchestrator runs it instead of trusting prose. All stage templates standardized on the `Approved by:` line. Sha-citation guidance for squash-merge/rebase flows. Lean profile for solo/small-team substantial features: one feature doc collapsing discovery+PRD+RFC (risk stages still run).
