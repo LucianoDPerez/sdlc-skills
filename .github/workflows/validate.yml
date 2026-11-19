@@ -1,0 +1,76 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON manifests
+        run: |
+          set -e
+          for f in plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .agents/plugins/marketplace.json; do
+            python3 -m json.tool "$f" > /dev/null || { echo "INVALID JSON: $f"; exit 1; }
+            echo "valid: $f"
+          done
+
+      - name: Validate skill frontmatter (name, description, license, metadata)
+        run: |
+          set -e
+          for f in skills/*/SKILL.md; do
+            grep -q '^name:' "$f" || { echo "FAIL $f: missing name"; exit 1; }
+            grep -q '^license:' "$f" || { echo "FAIL $f: missing license"; exit 1; }
+            grep -q '^  author:' "$f" || { echo "FAIL $f: missing metadata.author"; exit 1; }
+            grep -q '^  version:' "$f" || { echo "FAIL $f: missing metadata.version"; exit 1; }
+            d=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "$f")
+            [ -n "$d" ] || { echo "FAIL $f: missing description"; exit 1; }
+            len=${#d}
+            if [ "$len" -gt 250 ]; then echo "FAIL $f: description ${len} chars (MUST <= 250)"; exit 1; fi
+            if [ "$len" -gt 160 ]; then echo "WARN $f: description ${len} chars (SHOULD <= 160)"; fi
+          done
+
+      - name: Validate section order (style guide)
+        run: |
+          set -e
+          for f in skills/*/SKILL.md; do
+            order=$(grep -E '^## ' "$f" | tr '\n' ';')
+            case "$order" in
+              "## Activation Contract;## Hard Rules;## Decision Gates;## Execution Steps;## Output Contract;## References;## Assets;"|"## Activation Contract;## Hard Rules;## Decision Gates;## Execution Steps;## Output Contract;## References;") ;;
+              *) echo "FAIL $f: section order -> $order"; exit 1 ;;
+            esac
+          done
+
+      - name: Validate body budget (hard max 1000 tokens)
+        run: |
+          set -e
+          for f in skills/*/SKILL.md; do
+            body=$(awk 'BEGIN{n=0} /^---$/{c++; next} c<2{next} {print}' "$f")
+            w=$(printf '%s' "$body" | wc -w)
+            tok=$(( w * 13 / 10 ))
+            echo "$tok tokens  $f"
+            if [ "$tok" -gt 1000 ]; then echo "FAIL $f: body ~${tok} tokens (hard max 1000)"; exit 1; fi
+          done
+
+      - name: Validate local references exist
+        run: |
+          set -e
+          fail=0
+          for f in skills/*/SKILL.md; do
+            dir=$(dirname "$f")
+            while IFS= read -r ref; do
+              if [ ! -f "$dir/$ref" ]; then echo "BROKEN: $f -> $ref"; fail=1; fi
+            done < <(grep -oE '(references|assets)/[A-Za-z0-9._-]+' "$f" | sort -u)
+          done
+          [ "$fail" -eq 0 ] || exit 1
+
+      - name: Validate registry (AGENTS.md lists every skill)
+        run: |
+          set -e
+          ls skills | sort > /tmp/sdirs.txt
+          grep -oE '^\| `[a-z-]+`' AGENTS.md | tr -d '|` ' | sort > /tmp/areg.txt
+          diff /tmp/sdirs.txt /tmp/areg.txt && echo "registry matches" || { echo "FAIL: AGENTS.md registry out of sync"; exit 1; }
