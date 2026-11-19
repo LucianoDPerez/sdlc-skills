@@ -9,11 +9,11 @@ One perfect, self-contained skill per stage of the software development lifecycl
 ## The pipeline
 
 ```
+        ┌────── adr: spawned at ANY stage when a significant choice is made ──────┐
+        │                                                                         │
 discovery ──▶ prd ──▶ ux-ui ──▶ rfc ──▶ erd ──▶ api-design ──▶ security ──▶ qa ──▶ release
                 │
                 └── implementation & code review (covered by your existing review skills)
-
-adr: transversal — spawned whenever a significant choice is made, at any stage.
 ```
 
 Each stage produces a versioned artifact inside the product repo, and each stage has an entry gate: the previous artifact must exist and pass its checklist before the next stage starts.

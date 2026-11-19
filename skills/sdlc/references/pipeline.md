@@ -36,6 +36,12 @@ decisions/
 | → release | tests green | go/no-go checklist, tested rollback, runbook |
 | implementation | after qa | owned by code-review/PR skills, not this set |
 
+## Transversal stage: `adr`
+
+`adr` runs at ANY point in the pipeline — it has no fixed slot. Rule of thumb: whenever a choice is hard to reverse, affects people outside the deciding room, or will be questioned later, the active stage skill MUST stop and write `decisions/YYYY-MM-DD-<slug>.md` via `adr`, then reference it from its artifact. A design doc containing an unlinked significant choice fails review.
+
+Typical spawn points: `rfc` (architecture alternative chosen), `erd` (denormalization or ON DELETE CASCADE accepted), `api-design` (versioning/deprecation policy), `security` (risk formally accepted), `release` (destructive step signed off).
+
 ## Gate enforcement
 
 - A stage skill asked to start without its entry artifact MUST report the blocked gate and name the missing file.
