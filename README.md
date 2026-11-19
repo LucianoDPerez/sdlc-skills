@@ -1,7 +1,7 @@
 # SDLC Skills
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Skills: 11](https://img.shields.io/badge/skills-11-5C4FC7)](#skills)
+[![Skills: 12](https://img.shields.io/badge/skills-12-5C4FC7)](#skills)
 [![Agent Skills Standard](https://img.shields.io/badge/Agent_Skills-Standard-8A2BE2)](https://agentskills.io)
 
 One perfect, self-contained skill per stage of the software development lifecycle — from discovery to production. Built for OpenCode, Claude Code, and Codex (any Agent Skills Standard runtime).
@@ -16,7 +16,7 @@ discovery ──▶ prd ──▶ ux-ui ──▶ rfc ──▶ erd ──▶ ap
                 └── implementation & code review (covered by your existing review skills)
 ```
 
-The bracket marks `adr` as a parallel lane spanning the whole pipeline — not a stage between others, and not something that originates at discovery. In practice most ADRs spawn at `rfc`; what decides is the significance rule in `skills/sdlc/references/pipeline.md` (transversal stage), never the stage itself.
+The bracket marks `adr` as a parallel lane spanning the whole pipeline — not a stage between others, and not something that originates at discovery. In practice most ADRs spawn at `rfc`; what decides is the significance rule in `skills/sdlc/references/pipeline.md` (transversal stage), never the stage itself. Implementation runs against the repo's standing contract `docs/principles.md` (`principles` skill): every RFC declares its deviations, and a deviation without a linked ADR fails review.
 
 Each stage produces a versioned artifact inside the product repo, and each stage has an entry gate: the previous artifact must exist and pass its checklist before the next stage starts.
 
