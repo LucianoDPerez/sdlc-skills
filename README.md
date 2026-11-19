@@ -47,7 +47,14 @@ mkdir -p ~/.claude/skills
 cp -R skills/* ~/.claude/skills/
 ```
 
-**Codex**: copy `skills/*` to `~/.codex/skills/` (or `.agents/skills/` in the project), then reference them from `AGENTS.md`.
+**Codex** (verified path: project-level shared folder + AGENTS.md reference):
+```bash
+mkdir -p .agents/skills
+cp -R skills/* .agents/skills/
+# then list the skills you use in the project's AGENTS.md
+```
+
+**Tip**: OpenCode also reads `~/.claude/skills` and `~/.agents/skills` (project: `.claude/skills`, `.agents/skills`). One copy in `~/.claude/skills` serves both OpenCode and Claude Code; when the same skill exists in several places, project scope beats global.
 
 ## Principles
 
