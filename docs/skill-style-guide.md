@@ -4,7 +4,7 @@ Use this guide when creating or refactoring skills in this repo. A skill is a **
 
 ## Required Structure
 
-Every `SKILL.md` MUST use this order unless a section is truly irrelevant:
+Every `SKILL.md` MUST use this exact order. Only the Assets section may be omitted, when the skill ships no assets — this matches the CI section-order check:
 
 1. **Frontmatter** — complete metadata for skill discovery.
 2. **Activation Contract** — exact situations that load the skill.
@@ -13,6 +13,7 @@ Every `SKILL.md` MUST use this order unless a section is truly irrelevant:
 5. **Execution Steps** — ordered operational workflow.
 6. **Output Contract** — required final format or artifacts.
 7. **References** — local files only; supporting detail lives outside the skill.
+8. **Assets** — optional; templates and fixtures the skill ships.
 
 ## Frontmatter Rules
 
