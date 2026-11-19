@@ -19,6 +19,7 @@ This repo hosts one skill per SDLC stage. A skill is a runtime instruction contr
 | `security` | `skills/security/SKILL.md` | threat model, STRIDE, security review, attack surface, OWASP |
 | `qa` | `skills/qa/SKILL.md` | test strategy, test plan, QA, coverage, quality gates |
 | `release` | `skills/release/SKILL.md` | release plan, deploy, go/no-go, runbook, rollback |
+| `principles` | `skills/principles/SKILL.md` | engineering principles, coding standards, SOLID, circuit breaker, resilience, standing rules |
 
 ## Rules for agents working in this repo
 

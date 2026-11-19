@@ -45,6 +45,10 @@ Bypass rule: a small brownfield change skips the stage pipeline by design — th
 
 Typical spawn points: `rfc` (architecture alternative chosen), `erd` (denormalization or ON DELETE CASCADE accepted), `api-design` (versioning/deprecation policy), `security` (risk formally accepted), `release` (destructive step signed off).
 
+## Standing artifact: `principles`
+
+`docs/principles.md` is bootstrapped once per product repo via `principles` and ratified by a founding ADR. It is not a pipeline stage — it is standing context: every `rfc` declares its deviations from it (an unlinked deviation fails review), and code review enforces it during implementation.
+
 ## Gate enforcement
 
 - A stage skill asked to start without its entry artifact MUST report the blocked gate and name the missing file.

@@ -46,6 +46,13 @@ flowchart LR
 
 One mermaid sequenceDiagram per critical PRD story, error branches included.
 
+### Principles deviations
+
+Against the repo's `docs/principles.md` — every row links an ADR; "none" is a valid entry:
+
+| Principle | Deviation | ADR |
+|---|---|---|
+
 ## 6. Data
 
 Entities touched or created (detail lives in the ERD via `erd`); storage implications one level deep.

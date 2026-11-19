@@ -35,6 +35,7 @@ Each stage produces a versioned artifact inside the product repo, and each stage
 | Security | `security` | threat model, STRIDE, security review | `docs/security/<feature>-threat-model.md` |
 | Quality | `qa` | test strategy, test plan, coverage | `docs/qa/<feature>-test-plan.md` |
 | Ship | `release` | release plan, go/no-go, runbook, rollback | `docs/releases/<version>.md` |
+| Implementation contract | `principles` | SOLID, circuit breaker, resilience, coding standards | `docs/principles.md` |
 
 ## Install
 

@@ -4,7 +4,7 @@ description: "Trigger: RFC, technical design, architecture doc, system design. P
 license: Apache-2.0
 metadata:
   author: luchop
-  version: "1.0"
+  version: "1.1"
 ---
 
 ## Activation Contract
@@ -19,6 +19,7 @@ Load when a PRD (and UX spec, if user-facing) is approved and the technical appr
 - Architecture views follow C4 (context + container minimum) as mermaid, per `references/design-review.md`.
 - Rollout and security-considerations sections are mandatory, not optional appendices.
 - Cite the PRD/UX artifacts; every requirement traced to a design element or explicitly deferred.
+- Deviations from the repo's `docs/principles.md` are declared in the design; a deviation without a linked ADR fails review.
 
 ## Decision Gates
 

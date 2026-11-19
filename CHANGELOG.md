@@ -6,6 +6,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ### Added
 
+- `principles` (new, 1.0): per-repo engineering principles — layering decision justified per repo, SOLID conventions, resilience table (timeout/retry/breaker per remote call), idempotency/dedup, error handling, concurrency. Ratified by a founding ADR; enforced via RFC deviations and code review.
+- `rfc` (1.0 → 1.1): hard rule — deviations from `docs/principles.md` are declared in the design; a deviation without a linked ADR fails review. Template gains a Principles deviations section.
 - `sdlc` (1.1 → 1.2): explicit brownfield bypass — small changes with no feature semantics go straight to implementation/review; `adr` spawns only on significant choices. Documented in `pipeline.md` as a designed bypass, not gate evasion.
 
 ## [1.1.0] — 2026-11-19
