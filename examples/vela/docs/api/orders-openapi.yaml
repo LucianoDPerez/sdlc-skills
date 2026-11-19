@@ -1,0 +1,60 @@
+# Vela Store — account notification preferences API
+# RFC: docs/rfc/0001-order-emails.md @ cecbd11
+# Approved by: Sam Okafor (tech lead), 2026-11-19
+openapi: 3.1.0
+info:
+  title: Notification preferences API
+  version: 1.4.0
+  description: >
+    Per-account transactional email preferences. Confirmation emails are
+    mandatory (transactional necessity); only shipping notices are togglable.
+paths:
+  /me/notification-preferences:
+    get:
+      summary: Current preferences for the authenticated account
+      responses:
+        "200":
+          description: Preferences
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NotificationPreferences"}
+        "401": {$ref: "#/components/responses/Problem"}
+    put:
+      summary: Replace preferences (full-resource PUT, naturally idempotent)
+      requestBody:
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/NotificationPreferencesInput"}
+      responses:
+        "200":
+          description: Updated (identical input → same state, still 200)
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NotificationPreferences"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "422": {$ref: "#/components/responses/Problem"}
+        "429": {$ref: "#/components/responses/Problem"}
+components:
+  schemas:
+    NotificationPreferences:
+      type: object
+      required: [shipping_notices]
+      properties:
+        shipping_notices: {type: boolean}
+    NotificationPreferencesInput:
+      type: object
+      required: [shipping_notices]
+      properties:
+        shipping_notices: {type: boolean}
+  responses:
+    Problem:
+      description: RFC 7807 problem+json with stable type URLs
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            required: [type, title, status]
+            properties:
+              type: {type: string}
+              title: {type: string}
+              status: {type: integer}
