@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "sdlc-skills",
+  "version": "1.0.0",
+  "description": "11 SDLC stage skills: discovery, PRD, UX/UI, RFC, ADR, ERD, API design, security threat modeling, QA, release, and an orchestrator that enforces stage gates from idea to production.",
+  "owner": {
+    "name": "LucianoDPerez"
+  },
+  "plugins": [
+    {
+      "name": "sdlc-skills",
+      "displayName": "SDLC Skills",
+      "description": "One perfect skill per SDLC stage — discovery to production, with stage gates and versioned artifacts.",
+      "version": "1.0.0",
+      "category": "Skills",
+      "tags": [
+        "sdlc",
+        "discovery",
+        "prd",
+        "rfc",
+        "adr",
+        "threat-modeling",
+        "qa",
+        "release"
+      ],
+      "source": "./",
+      "author": {
+        "name": "LucianoDPerez"
+      }
+    }
+  ]
+}

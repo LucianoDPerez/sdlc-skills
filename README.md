@@ -1,5 +1,9 @@
 # SDLC Skills
 
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Skills: 11](https://img.shields.io/badge/skills-11-5C4FC7)](#skills)
+[![Agent Skills Standard](https://img.shields.io/badge/Agent_Skills-Standard-8A2BE2)](https://agentskills.io)
+
 One perfect, self-contained skill per stage of the software development lifecycle — from discovery to production. Built for OpenCode, Claude Code, and Codex (any Agent Skills Standard runtime).
 
 ## The pipeline
@@ -41,7 +45,12 @@ cp -R skills/* .opencode/skills/
 
 **OpenCode** (global): copy `skills/*` to `~/.config/opencode/skills/`.
 
-**Claude Code**:
+**Claude Code** (plugin — one command):
+```text
+/plugin marketplace add LucianoDPerez/sdlc-skills
+```
+
+**Claude Code** (manual):
 ```bash
 mkdir -p ~/.claude/skills
 cp -R skills/* ~/.claude/skills/
@@ -55,6 +64,18 @@ cp -R skills/* .agents/skills/
 ```
 
 **Tip**: OpenCode also reads `~/.claude/skills` and `~/.agents/skills` (project: `.claude/skills`, `.agents/skills`). One copy in `~/.claude/skills` serves both OpenCode and Claude Code; when the same skill exists in several places, project scope beats global.
+
+**As a plugin** — this repo is conformant to the open [Agent Plugins v1.0.0 specification](https://agent-plugins.org) (root `plugin.json`, skills discovered at `skills/`):
+
+```text
+# Claude Code
+/plugin marketplace add LucianoDPerez/sdlc-skills
+
+# Codex (marketplace manifest at .agents/plugins/marketplace.json, following the official google/skills pattern)
+codex plugin marketplace add LucianoDPerez/sdlc-skills
+```
+
+Skills remain the portable cargo: any skills-only client consumes `skills/` directly, with no plugin support required.
 
 ## Principles
 
