@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: <Service> API
+  version: 1.0.0
+  description: |
+    Contract for <feature>. Source of truth: code and clients are generated from this file.
+    RFC: docs/rfc/NNNN-<slug>.md
+servers:
+  - url: https://api.example.com/api/v1
+security:
+  - bearerAuth: []
+
+tags:
+  - name: orders
+
+paths:
+  /orders:
+    get:
+      tags: [orders]
+      operationId: listOrders
+      summary: List orders (cursor-paginated)
+      parameters:
+        - { $ref: "#/components/parameters/cursor" }
+        - { $ref: "#/components/parameters/limit" }
+        - name: status
+          in: query
+          schema: { type: string, enum: [draft, active, cancelled] }
+      responses:
+        "200":
+          description: Page of orders
+          headers:
+            next_cursor: { schema: { type: string } }
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, next_cursor]
+                properties:
+                  data: { type: array, items: { $ref: "#/components/schemas/Order" } }
+                  next_cursor: { type: [string, "null"] }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+    post:
+      tags: [orders]
+      operationId: createOrder
+      summary: Create an order (idempotent)
+      parameters:
+        - { $ref: "#/components/parameters/idempotencyKey" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OrderCreate" }
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  /orders/{id}:
+    get:
+      tags: [orders]
+      operationId: getOrder
+      parameters: [{ $ref: "#/components/parameters/resourceId" }]
+      responses:
+        "200":
+          description: The order
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+
+  parameters:
+    cursor: { name: cursor, in: query, schema: { type: string } }
+    limit: { name: limit, in: query, schema: { type: integer, default: 50, maximum: 100 } }
+    resourceId: { name: id, in: path, required: true, schema: { type: string } }
+    idempotencyKey: { name: Idempotency-Key, in: header, required: true, schema: { type: string } }
+
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotFound:
+      description: Unknown or cross-tenant resource
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    ValidationError:
+      description: Validation failed (field-level details)
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Conflict:
+      description: State conflict
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After: { schema: { type: integer } }
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri, description: stable error registry URL }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+        errors:
+          type: array
+          description: field-level validation failures (422)
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              message: { type: string }
+
+    Order:
+      type: object
+      required: [id, status, created_at]
+      properties:
+        id: { type: string, examples: ["o_123"] }
+        status: { type: string, enum: [draft, active, cancelled] }
+        created_at: { type: string, format: date-time }
+
+    OrderCreate:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [sku, quantity]
+            properties:
+              sku: { type: string }
+              quantity: { type: integer, minimum: 1 }
