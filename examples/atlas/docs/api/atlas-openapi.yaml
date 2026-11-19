@@ -1,0 +1,66 @@
+# Atlas — tenant export API
+# RFC: docs/rfc/0001-tenant-export.md @ 7ed2900
+# Approved by: Dev Patel (platform lead), 2026-11-21
+openapi: 3.1.0
+info:
+  title: Tenant export API
+  version: 2.3.0
+  description: >
+    Async, tenant-scoped data export. Machine-facing; no UI. Idempotency-Key
+    on POST dedups running jobs. Errors are RFC 7807 problem+json.
+paths:
+  /v1/tenants/{tenantId}/exports:
+    post:
+      summary: Request an export job (async)
+      parameters:
+        - {name: tenantId, in: path, required: true, schema: {type: string}}
+        - {name: Idempotency-Key, in: header, required: true, schema: {type: string}}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                format: {type: string, enum: [csv, json], default: csv}
+      responses:
+        "202": {description: Job accepted (same job id for repeated Idempotency-Key)}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+        "429": {$ref: "#/components/responses/Problem"}
+  /v1/tenants/{tenantId}/exports/{jobId}:
+    get:
+      summary: Poll a job; on completion returns a single-use signed URL
+      parameters:
+        - {name: tenantId, in: path, required: true, schema: {type: string}}
+        - {name: jobId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Job status; completed jobs carry downloadUrl (15-min TTL, single-use)
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ExportJob"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "401": {$ref: "#/components/responses/Problem"}
+components:
+  schemas:
+    ExportJob:
+      type: object
+      required: [jobId, status]
+      properties:
+        jobId: {type: string}
+        status: {type: string, enum: [queued, running, completed, failed]}
+        format: {type: string}
+        downloadUrl: {type: string, description: only present when status=completed}
+        problem: {type: object, description: RFC 7807 problem when status=failed}
+  responses:
+    Problem:
+      description: RFC 7807 problem+json, stable type URLs
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            required: [type, title, status]
+            properties:
+              type: {type: string}
+              title: {type: string}
+              status: {type: integer}
