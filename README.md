@@ -9,12 +9,14 @@ One perfect, self-contained skill per stage of the software development lifecycl
 ## The pipeline
 
 ```
-        ┌────── adr: spawned at ANY stage when a significant choice is made ──────┐
-        │                                                                         │
+        ┌── adr: any stage, significant choices only — most spawn at rfc ──┐
+        │                                                                  │
 discovery ──▶ prd ──▶ ux-ui ──▶ rfc ──▶ erd ──▶ api-design ──▶ security ──▶ qa ──▶ release
                 │
                 └── implementation & code review (covered by your existing review skills)
 ```
+
+The bracket marks `adr` as a parallel lane spanning the whole pipeline — not a stage between others, and not something that originates at discovery. In practice most ADRs spawn at `rfc`; what decides is the significance rule in `skills/sdlc/references/pipeline.md` (transversal stage), never the stage itself.
 
 Each stage produces a versioned artifact inside the product repo, and each stage has an entry gate: the previous artifact must exist and pass its checklist before the next stage starts.
 
@@ -93,6 +95,21 @@ Stage skills are stack-agnostic; implementation lanes live inside `ux-ui` and `q
 - **Frontend (React | Angular)**: `skills/ux-ui/references/framework-handoff.md` maps every UX component to shadcn/Radix (React) and Material/CDK (Angular); same UX spec drives both. Visual generation tools (e.g. Google Stitch) seed from the spec — generated HTML is a draft, never the deliverable.
 - **QA**: `skills/qa/references/pyramid-risk-gates.md` has the per-stack framework table (Vitest/RTL vs TestBed; Playwright + axe-core shared).
 - **Google Cloud projects**: install official `google/skills` (24.4k★, Apache-2.0) as technology-specific complement — it covers GCP services, not lifecycle stages.
+
+## Authors & attribution
+
+Skills authored and maintained by [LucianoDPerez](https://github.com/LucianoDPerez) (frontmatter `metadata.author: luchop`). Apache-2.0 applies to this repo's text; the methodologies each skill encodes belong to their original authors:
+
+- `product-discovery` — The Mom Test (Rob Fitzpatrick); Opportunity Solution Tree (Teresa Torres)
+- `prd` — PRD structure (Martin Eriksson); epic splitting (Richard Lawrence); Gherkin (Cucumber/BDD)
+- `ux-ui` — WCAG 2.2 (W3C); iOS HIG / Material Design platform conventions
+- `rfc` — design-doc convention (Google design docs, Python PEPs, Rust RFCs); C4 Model (Simon Brown)
+- `adr` — Architectural Decision Records (Michael Nygard, 2011); MADR format
+- `erd` — expand-contract migration pattern
+- `api-design` — OpenAPI 3.1 (OpenAPI Initiative); RFC 7807 (IETF)
+- `security` — STRIDE (Microsoft); OWASP Top 10
+- `qa` — test pyramid (Mike Cohn); Session-Based Test Management (Kaner/Bach)
+- `release` — SRE practices and blameless postmortems (Google SRE)
 
 ## Maintenance
 

@@ -4,10 +4,14 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-11-19
+
 ### Changed
 
-- `sdlc` (1.0 → 1.1): orchestrator execution now verifies a named human approver, not just artifact existence; rework is an explicit routing rule (later stage invalidates → route back, fix, re-verify downstream contracts); `erd` and `api-design` may both apply after an RFC, in either order, before `security`.
+- `sdlc` (1.0 → 1.1): orchestrator execution now verifies a named human approver, not just artifact existence; rework is an explicit routing rule (later stage invalidates → route back, fix, re-verify downstream contracts); `erd` and `api-design` may both apply after an RFC, in either order, before `security`; `adr` shown as transversal in the pipeline diagram and its routing generalized to any stage.
 - `skills/sdlc/references/pipeline.md`: gate enforcement documents the rework path and its recording rule ("reworked from \<stage\> on \<date\>").
+
+## [1.0.0] — 2026-11-19
 
 ## [1.0.0] — 2026-11-19
 
