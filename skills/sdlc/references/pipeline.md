@@ -35,6 +35,9 @@ decisions/
 | → qa | threat model done | risk-ranked test plan; every acceptance criterion maps to a test or an explicit "not covered" |
 | → release | tests green | go/no-go checklist, tested rollback, runbook |
 | implementation | after qa | owned by code-review/PR skills, not this set |
+| small change → implementation | brownfield fix, no feature semantics | shipped via review skills; `adr` spawns on significant choice |
+
+Bypass rule: a small brownfield change skips the stage pipeline by design — this is not gate evasion. If the change adds user-visible behavior, a contract, or data, it has feature semantics and runs the pipeline.
 
 ## Transversal stage: `adr`
 

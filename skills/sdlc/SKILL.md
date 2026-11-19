@@ -4,7 +4,7 @@ description: "Trigger: SDLC, what stage, full lifecycle, new feature, new projec
 license: Apache-2.0
 metadata:
   author: luchop
-  version: "1.1"
+  version: "1.2"
 ---
 
 ## Activation Contract
@@ -34,6 +34,7 @@ Load when the user starts new work with no clear stage ("build X", "we want Y"),
 | Design done, before implementation | `security` | threat model |
 | Threat model done / pre-merge | `qa` | test plan |
 | Tests green, pre-production | `release` | release plan + runbook |
+| Small change in existing system, no feature semantics | your review skills directly; `adr` only if a significant choice appears | fix shipped |
 
 A feature may need BOTH `erd` and `api-design`: run each that applies, in either order, before moving to `security`.
 

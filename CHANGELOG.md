@@ -4,6 +4,10 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Added
+
+- `sdlc` (1.1 → 1.2): explicit brownfield bypass — small changes with no feature semantics go straight to implementation/review; `adr` spawns only on significant choices. Documented in `pipeline.md` as a designed bypass, not gate evasion.
+
 ## [1.1.0] — 2026-11-19
 
 ### Changed
