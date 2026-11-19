@@ -4,7 +4,7 @@ description: "Trigger: UX, UI, wireframe, screens, views, user flow, design syst
 license: Apache-2.0
 metadata:
   author: luchop
-  version: "1.0"
+  version: "1.1"
 ---
 
 ## Activation Contract
@@ -15,7 +15,7 @@ Load after a PRD is approved, before or alongside the RFC, for any user-facing s
 
 - Every screen MUST specify all states: empty, loading, error, success (`references/screen-states.md`).
 - Every flow MUST map back to a PRD user story and cover its failure path.
-- WCAG 2.2 AA is non-negotiable; run the checklist in `references/accessibility.md` before sign-off.
+- WCAG 2.2 AA is non-negotiable; spec-time checklist items (`references/accessibility.md`) are verified on the document before sign-off. Implementation-time items are handed to `qa` as the accessibility test procedure — never claimed at spec time.
 - Use design tokens, never one-off hex/pixel values; extend the existing system if one exists.
 - Specify structure and behavior, not decoration — no pixel-level art direction in this artifact.
 - Real copy beats lorem ipsum; label every placeholder as such.
@@ -48,7 +48,7 @@ Load after a PRD is approved, before or alongside the RFC, for any user-facing s
 
 ## Output Contract
 
-Write `docs/ux/<feature-slug>.md`: flows (with failure paths), screen inventory table, per-screen state specs, component/token deltas, accessibility pass results, and open questions. A screen without all four states fails review.
+Write `docs/ux/<feature-slug>.md`: flows (with failure paths), screen inventory table, per-screen state specs, component/token deltas, spec-time accessibility results (implementation-time items queued for `qa`, never claimed here), and open questions. A screen without all four states fails review.
 
 ## References
 

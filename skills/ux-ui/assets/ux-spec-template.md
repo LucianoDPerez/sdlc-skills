@@ -3,6 +3,7 @@
 Status: draft | approved
 Date: YYYY-MM-DD
 PRD: `docs/prd/<feature-slug>.md @ <approval sha>`
+Approved by: <name> (<role>), <date>
 Fidelity: low | mid | high | prototype
 
 ## 1. User flows
@@ -47,12 +48,10 @@ flowchart TD
 | Component | Variants | States | Props sketch | Screens |
 |---|---|---|---|---|
 
-## 6. Accessibility pass
+## 6. Accessibility pass (spec-time only)
 
-- [ ] axe-core clean on all screens × states
-- [ ] Keyboard-only flow complete
-- [ ] Screen-reader smoke pass
-- [ ] Contrast spot-check incl. disabled/error states
+- [ ] Spec-time checklist from `../references/accessibility.md` verified on this document: focus order, labels, error copy, titles/landmarks, target sizes in tokens, motion spec
+- [ ] Implementation-time items (axe, keyboard-only, screen-reader, measured contrast) queued into the `qa` test plan as the accessibility test procedure — NOT claimed here
 
 ## 7. Open questions
 
