@@ -1,6 +1,6 @@
 ---
 name: prd
-description: "Trigger: PRD, product requirements, user stories, success metrics, feature spec. Turn an approved discovery brief into an engineering-ready product requirements document."
+description: "Trigger: PRD, product requirements, user stories, success metrics, feature spec. Turn an approved discovery brief into an engineering-ready PRD."
 license: Apache-2.0
 metadata:
   author: luchop

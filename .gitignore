@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# local agent memory (session-scoped, not part of the plugin)
+.engram/

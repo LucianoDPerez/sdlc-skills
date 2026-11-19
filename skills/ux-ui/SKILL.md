@@ -1,6 +1,6 @@
 ---
 name: ux-ui
-description: "Trigger: UX, UI, wireframe, screens, views, user flow, design system, prototype, accessibility. Specify user flows, screen states, and design tokens before implementation."
+description: "Trigger: UX, UI, wireframe, screens, views, user flow, design system, accessibility. Specify flows, screen states, and design tokens before implementation."
 license: Apache-2.0
 metadata:
   author: luchop

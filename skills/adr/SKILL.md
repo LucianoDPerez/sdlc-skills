@@ -1,6 +1,6 @@
 ---
 name: adr
-description: "Trigger: ADR, decision record, why did we choose, decision log, supersede. Capture one significant choice, its options, and consequences as an immutable record."
+description: "Trigger: ADR, decision record, why did we choose, decision log, supersede. Capture one significant choice, its options, and consequences."
 license: Apache-2.0
 metadata:
   author: luchop

@@ -1,6 +1,6 @@
 ---
 name: rfc
-description: "Trigger: RFC, technical design, architecture doc, system design, how to build it. Produce a reviewable technical design with real alternatives and a rollout plan."
+description: "Trigger: RFC, technical design, architecture doc, system design. Produce a reviewable design with real alternatives and a rollout plan."
 license: Apache-2.0
 metadata:
   author: luchop
