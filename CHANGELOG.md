@@ -4,6 +4,10 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Changed
+
+- `sdlc` (1.2 → 1.3): approval integrity — approvals bind to the approved content via commit sha: downstream artifacts cite inputs as `path @ <sha>`, the orchestrator verifies `git diff <sha>` before opening a stage, and drift returns the artifact to review. Rework now requires a new approval. Templates updated to the citation format. Reported by Mike Dabydeen (community review of the public release).
+
 ### Added
 
 - `principles` (new, 1.0): per-repo engineering principles — layering decision justified per repo, SOLID conventions, resilience table (timeout/retry/breaker per remote call), idempotency/dedup, error handling, concurrency. Ratified by a founding ADR; enforced via RFC deviations and code review.

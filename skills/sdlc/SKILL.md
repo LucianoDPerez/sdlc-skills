@@ -4,7 +4,7 @@ description: "Trigger: SDLC, what stage, full lifecycle, new feature, new projec
 license: Apache-2.0
 metadata:
   author: luchop
-  version: "1.2"
+  version: "1.3"
 ---
 
 ## Activation Contract
@@ -41,7 +41,7 @@ A feature may need BOTH `erd` and `api-design`: run each that applies, in either
 ## Execution Steps
 
 1. Identify the feature-slug in scope; if several features are in flight, ask which one before scanning.
-2. Scan `docs/` and `decisions/` for its artifacts. An artifact counts only if it exists AND names a human approver.
+2. Scan `docs/` and `decisions/` for its artifacts. An artifact counts only if it exists, names a human approver, and every downstream citation `path @ <sha>` matches current content (`git diff <sha> -- <file>` empty). Drift returns the artifact to review.
 3. Map current state to the table above; state which stage is next and why.
 4. Load that stage's `SKILL.md` and execute its steps verbatim.
 5. Verify the stage's Output Contract checklist passes.

@@ -3,8 +3,8 @@
 Status: draft | review | accepted | rejected | superseded
 Author:
 Reviewers:
-PRD: link
-UX spec: link (if user-facing)
+PRD: `docs/prd/<feature-slug>.md @ <approval sha>`
+UX spec: `docs/ux/<feature-slug>.md @ <approval sha>` (if user-facing)
 Date: YYYY-MM-DD
 
 ## 1. Context

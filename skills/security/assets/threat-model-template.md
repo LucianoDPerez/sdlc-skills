@@ -1,8 +1,8 @@
 # Threat Model: <feature-slug>
 
 Status: draft | approved
-RFC: link
-API spec: link (if any)
+RFC: `docs/rfc/NNNN-<slug>.md @ <approval sha>`
+API spec: `docs/api/<service>-openapi.yaml @ <approval sha>` (if any)
 Date: YYYY-MM-DD
 
 ## 1. Elements, flows, trust boundaries

@@ -1,7 +1,7 @@
 # ERD: <feature-slug>
 
 Status: draft | approved
-RFC: link to `docs/rfc/NNNN-<slug>.md`
+RFC: `docs/rfc/NNNN-<slug>.md @ <approval sha>`
 Date: YYYY-MM-DD
 
 ## 1. Diagram

@@ -1,9 +1,9 @@
 # Test Plan: <feature-slug>
 
 Status: draft | approved
-PRD: link
-RFC: link
-Threat model: link
+PRD: `docs/prd/<feature-slug>.md @ <approval sha>`
+RFC: `docs/rfc/NNNN-<slug>.md @ <approval sha>`
+Threat model: `docs/security/<feature-slug>-threat-model.md @ <approval sha>`
 Date: YYYY-MM-DD
 
 ## 1. Risk matrix

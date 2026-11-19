@@ -2,7 +2,7 @@
 
 Status: draft | approved
 Date: YYYY-MM-DD
-PRD: link to `docs/prd/<feature-slug>.md`
+PRD: `docs/prd/<feature-slug>.md @ <approval sha>`
 Fidelity: low | mid | high | prototype
 
 ## 1. User flows

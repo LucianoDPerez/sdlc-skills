@@ -52,6 +52,7 @@ Typical spawn points: `rfc` (architecture alternative chosen), `erd` (denormaliz
 ## Gate enforcement
 
 - A stage skill asked to start without its entry artifact MUST report the blocked gate and name the missing file.
-- "Approved" means a human named in the doc accepted it (PR review, comment, or meeting) — do not self-approve.
+- "Approved" means a human named in the doc accepted it (PR review, comment, or meeting) — do not self-approve. Acceptance binds to content: downstream artifacts cite their inputs as `path @ <sha>` — the commit where the upstream reached approved status.
+- Approval integrity: before opening a stage, verify every cited input with `git diff <sha> -- <artifact>`; a non-empty diff means the approval no longer covers the current text — the artifact returns to review. Post-approval edits void the approval.
 - Cross-references are mandatory: PRD links its discovery brief; RFC links the PRD; threat model and test plan link the RFC; release links the test plan.
-- Rework is normal, not failure: update the upstream artifact, then re-run the Output Contracts of every downstream artifact that cited it. The rework path taken is recorded in the stage's artifact (one line: "reworked from <stage> on <date>").
+- Rework is normal, not failure: update the upstream artifact, then re-run the Output Contracts of every downstream artifact that cited it, and obtain a NEW approval — the old sha no longer covers the text. The rework path taken is recorded in the stage's artifact (one line: "reworked from <stage> on <date>").

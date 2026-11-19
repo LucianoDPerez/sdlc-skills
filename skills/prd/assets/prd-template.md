@@ -3,7 +3,7 @@
 Status: draft | approved
 Date: YYYY-MM-DD
 Author:
-Discovery brief: link to `docs/discovery/<feature-slug>.md`
+Discovery brief: `docs/discovery/<feature-slug>.md @ <approval sha>`
 Approver:
 
 ## 1. Executive summary
