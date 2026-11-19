@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Validate JSON manifests
         run: |
@@ -94,3 +96,21 @@ jobs:
             [ -n "$v" ] || { echo "FAIL $f: missing metadata.version"; exit 1; }
           done
           grep -oE '^- `[a-z-]+` \(.*\)' CHANGELOG.md >/dev/null 2>&1 || true
+
+      - name: Validate gate script (syntax)
+        run: bash -n skills/sdlc/assets/verify-gate.sh
+
+      - name: Behavioral test: example chains must pass the gate
+        run: |
+          set -e
+          for root in examples/vela examples/atlas examples/lean-solo; do
+            bash skills/sdlc/assets/verify-gate.sh --root "$root" $(cd "$root" && find docs -type f | sort)
+          done
+
+      - name: Behavioral test: stale citation must fail the gate
+        run: |
+          if bash skills/sdlc/assets/verify-gate.sh --root examples/gate-fixture docs/downstream.md; then
+            echo "FAIL: the gate accepted a stale citation"; exit 1
+          else
+            echo "OK: stale citation rejected as expected"
+          fi

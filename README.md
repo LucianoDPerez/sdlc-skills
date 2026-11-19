@@ -18,6 +18,22 @@ discovery ──▶ prd ──▶ ux-ui ──▶ rfc ──▶ erd ──▶ ap
 
 The bracket marks `adr` as a parallel lane spanning the whole pipeline — not a stage between others, and not something that originates at discovery. In practice most ADRs spawn at `rfc`; what decides is the significance rule in `skills/sdlc/references/pipeline.md` (transversal stage), never the stage itself. Implementation runs against the repo's standing contract `docs/principles.md` (`principles` skill): every RFC declares its deviations, and a deviation without a linked ADR fails review.
 
+## Examples: every pipeline path, exercised
+
+- [`examples/vela/`](examples/vela/) — greenfield, user-facing: the full chain (discovery → PRD → UX → RFC → ADR → ERD → OpenAPI → threat model → test plan → release), each stage its own commit, every downstream artifact citing its upstream `path @ <approval sha>`.
+- [`examples/atlas/`](examples/atlas/) — B2B, API-only: `ux` and `erd` skipped with declared reasons (no user-facing surface, no schema change).
+- [`examples/bypass-webhook-timeout/`](examples/bypass-webhook-timeout/) — brownfield small change: pipeline bypassed by design; one ADR spawned on a significant choice.
+- [`examples/lean-solo/`](examples/lean-solo/) — solo developer, substantial feature: the lean profile — one collapsed feature doc replacing discovery+PRD+RFC.
+- [`examples/gate-fixture/`](examples/gate-fixture/) — a stale citation the gate MUST reject; CI asserts both outcomes on every push.
+
+Verify every passing chain yourself:
+
+```bash
+for root in examples/vela examples/atlas examples/lean-solo; do
+  bash skills/sdlc/assets/verify-gate.sh --root "$root" $(cd "$root" && find docs -type f | sort)
+done
+```
+
 Each stage produces a versioned artifact inside the product repo, and each stage has an entry gate: the previous artifact must exist and pass its checklist before the next stage starts.
 
 ## Skills

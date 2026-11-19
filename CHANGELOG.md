@@ -6,10 +6,16 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ### Changed
 
+- `sdlc` (1.3 → 1.4): enforcement is now deterministic — new `assets/verify-gate.sh` checks artifact existence, the `Approved by: <name> (<role>), <date>` line, and every `path @ <sha>` citation with a real `git diff`; the orchestrator runs it instead of trusting prose. All stage templates standardized on the `Approved by:` line. Sha-citation guidance for squash-merge/rebase flows. Lean profile for solo/small-team substantial features: one feature doc collapsing discovery+PRD+RFC (risk stages still run).
+- `ux-ui` (1.0 → 1.1): accessibility split into spec-time (verified on the document) and implementation-time (handed to `qa` as the accessibility test procedure) — the spec no longer claims checks that require a rendered UI.
+- docs: style guide aligned with the CI section-order check (only Assets is optional) — guide and validator no longer contradict.
 - `sdlc` (1.2 → 1.3): approval integrity — approvals bind to the approved content via commit sha: downstream artifacts cite inputs as `path @ <sha>`, the orchestrator verifies `git diff <sha>` before opening a stage, and drift returns the artifact to review. Rework now requires a new approval. Templates updated to the citation format. Reported by Mike Dabydeen (community review of the public release).
 
 ### Added
 
+- Behavioral regression in CI: `verify-gate.sh` runs against every example chain (must pass) and a stale-citation fixture (must fail) — editing a `SKILL.md` can no longer break gate enforcement silently.
+- `examples/` suite covering every pipeline path: `vela` (greenfield, full 10-stage chain with an ADR spawned at RFC), `atlas` (B2B API-only — `ux` and `erd` skipped with declared reasons), `bypass-webhook-timeout` (brownfield bypass + ADR spawn on a significant choice), `lean-solo` (solo-dev lean profile), `gate-fixture` (a stale citation the gate must reject). Real approval shas; each stage lands as its own commit.
+- `ROADMAP.md`: quarterly review cadence for methodology-dependent references (WCAG, OWASP, OpenAPI, SQL practices).
 - `principles` (new, 1.0): per-repo engineering principles — layering decision justified per repo, SOLID conventions, resilience table (timeout/retry/breaker per remote call), idempotency/dedup, error handling, concurrency. Ratified by a founding ADR; enforced via RFC deviations and code review.
 - `rfc` (1.0 → 1.1): hard rule — deviations from `docs/principles.md` are declared in the design; a deviation without a linked ADR fails review. Template gains a Principles deviations section.
 - `sdlc` (1.1 → 1.2): explicit brownfield bypass — small changes with no feature semantics go straight to implementation/review; `adr` spawns only on significant choices. Documented in `pipeline.md` as a designed bypass, not gate evasion.
