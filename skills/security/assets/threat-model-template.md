@@ -4,6 +4,7 @@ Status: draft | approved
 RFC: `docs/rfc/NNNN-<slug>.md @ <approval sha>`
 API spec: `docs/api/<service>-openapi.yaml @ <approval sha>` (if any)
 Date: YYYY-MM-DD
+Approved by: <name> (<role>), <date>
 
 ## 1. Elements, flows, trust boundaries
 

@@ -4,7 +4,8 @@ info:
   version: 1.0.0
   description: |
     Contract for <feature>. Source of truth: code and clients are generated from this file.
-    RFC: docs/rfc/NNNN-<slug>.md
+    RFC: docs/rfc/NNNN-<slug>.md @ <approval sha>
+    Approved by: <name> (<role>), <date>
 servers:
   - url: https://api.example.com/api/v1
 security:

@@ -3,7 +3,7 @@
 Status: draft | approved
 Date: YYYY-MM-DD
 Author:
-Approver:
+Approved by: <name> (<role>), <date>
 
 ## 1. Problem statement
 

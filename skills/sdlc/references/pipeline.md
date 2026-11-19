@@ -49,10 +49,20 @@ Typical spawn points: `rfc` (architecture alternative chosen), `erd` (denormaliz
 
 `docs/principles.md` is bootstrapped once per product repo via `principles` and ratified by a founding ADR. It is not a pipeline stage — it is standing context: every `rfc` declares its deviations from it (an unlinked deviation fails review), and code review enforces it during implementation.
 
+## Lean profile (solo / small team)
+
+A substantial feature (feature semantics — otherwise it is the bypass, not lean) built by a single implementer with no human review surface collapses the knowledge stages into ONE artifact: `docs/lean/<feature-slug>.md` (template: the sdlc skill's `assets/lean-feature-template.md`). It carries the gates of discovery (evidence), PRD (one metric, Gherkin stories, out-of-scope), and RFC (alternatives, principles deviations, rollout) as mandatory sections.
+
+- Approval: in solo mode the owner signs as approver — the weaker signal is acknowledged; sha-binding still applies, post-edit voids approval.
+- Risk stages are NOT collapsed: `security`, `qa`, and `release` still run before implementation/ship. A choice that will be questioned later still spawns `adr`.
+- A lean doc missing evidence, metric, or alternatives is a defect, not a style choice — the same Output Contract checks apply per section.
+
 ## Gate enforcement
 
 - A stage skill asked to start without its entry artifact MUST report the blocked gate and name the missing file.
 - "Approved" means a human named in the doc accepted it (PR review, comment, or meeting) — do not self-approve. Acceptance binds to content: downstream artifacts cite their inputs as `path @ <sha>` — the commit where the upstream reached approved status.
-- Approval integrity: before opening a stage, verify every cited input with `git diff <sha> -- <artifact>`; a non-empty diff means the approval no longer covers the current text — the artifact returns to review. Post-approval edits void the approval.
+- Approval integrity is enforced by script, not by obedience: before opening a stage, run the skill's `assets/verify-gate.sh --root <repo> <stage artifact>`. It checks existence, the `Approved by: <name> (<role>), <date>` line, and every cited input `path @ <sha>` with a real `git diff`. A non-empty diff means the approval no longer covers the current text — the artifact returns to review; post-approval edits void the approval.
+- Scriptless fallback: a named human approver in the doc plus `git diff <sha> -- <artifact>` empty for every citation.
+- Cite the sha as it lands on the default branch: with squash-merge or rebase flows, approve AFTER the merge and cite the merged sha — an unreachable sha cannot be verified. Format-only edits also void approval; normalize artifact format before approving (the re-approval cost is accepted by design).
 - Cross-references are mandatory: PRD links its discovery brief; RFC links the PRD; threat model and test plan link the RFC; release links the test plan.
 - Rework is normal, not failure: update the upstream artifact, then re-run the Output Contracts of every downstream artifact that cited it, and obtain a NEW approval — the old sha no longer covers the text. The rework path taken is recorded in the stage's artifact (one line: "reworked from <stage> on <date>").

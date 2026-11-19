@@ -6,6 +6,7 @@ Reviewers:
 PRD: `docs/prd/<feature-slug>.md @ <approval sha>`
 UX spec: `docs/ux/<feature-slug>.md @ <approval sha>` (if user-facing)
 Date: YYYY-MM-DD
+Approved by: <name> (<role>), <date>
 
 ## 1. Context
 

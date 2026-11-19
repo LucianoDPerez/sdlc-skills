@@ -3,6 +3,7 @@
 Status: draft | approved
 RFC: `docs/rfc/NNNN-<slug>.md @ <approval sha>`
 Date: YYYY-MM-DD
+Approved by: <name> (<role>), <date>
 
 ## 1. Diagram
 

@@ -4,7 +4,7 @@ Status: draft | approved
 Date: YYYY-MM-DD
 Author:
 Discovery brief: `docs/discovery/<feature-slug>.md @ <approval sha>`
-Approver:
+Approved by: <name> (<role>), <date>
 
 ## 1. Executive summary
 

@@ -4,6 +4,7 @@ Status: draft | go | no-go
 Date: YYYY-MM-DD
 Test plan: `docs/qa/<feature-slug>-test-plan.md @ <approval sha>`
 Threat model: `docs/security/<feature-slug>-threat-model.md @ <approval sha>`
+Approved by: <name> (<role>), <date>
 
 ## 1. Change inventory
 
