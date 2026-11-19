@@ -31,6 +31,23 @@ skills/<skill-name>/
 - PRs: keep one skill per PR when possible; cross-cutting pipeline changes are their own PR.
 - Every PR states which `SKILL.md` or reference changed and why, in one paragraph.
 
+## Versioning and updates
+
+Every skill change must be versioned and recorded in the same PR:
+
+1. **Bump the skill's `metadata.version`** in its `SKILL.md` frontmatter:
+   - **patch** — fixes or additions to `references/`/`assets/` that do not change the Output Contract
+   - **minor** — new sections, rules, or gates that do not invalidate existing artifacts
+   - **major** — changes to Output Contract, artifact paths, or pipeline gates (also label `breaking-change`)
+2. **Add an entry to `CHANGELOG.md`** under `Unreleased` before merge. CI warns if no `Unreleased` section exists.
+3. **Repo version stays in sync across four manifests**: `plugin.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` (top level and plugin entry). CI fails on mismatch.
+
+**Release process**: move `Unreleased` into a dated section, bump all four manifests together (minor for added/changed skills, major for breaking ones), tag `vX.Y.Z`, publish the GitHub release.
+
+**Consumer updates**:
+- Copy-based installs (skills folders): re-copy, or `npx skills update` which also removes obsolete skills.
+- Plugin installs (Claude Code / Codex): refresh from the marketplace — clients re-read manifests on update.
+
 ## Ground rules
 
 - Apache-2.0; by contributing you license your contribution under it.

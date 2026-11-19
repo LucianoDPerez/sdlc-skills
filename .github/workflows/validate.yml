@@ -74,3 +74,23 @@ jobs:
           ls skills | sort > /tmp/sdirs.txt
           grep -oE '^\| `[a-z-]+`' AGENTS.md | tr -d '|` ' | sort > /tmp/areg.txt
           diff /tmp/sdirs.txt /tmp/areg.txt && echo "registry matches" || { echo "FAIL: AGENTS.md registry out of sync"; exit 1; }
+
+      - name: Validate version sync across manifests
+        run: |
+          set -e
+          v1=$(python3 -c "import json;print(json.load(open('plugin.json'))['version'])")
+          v2=$(python3 -c "import json;print(json.load(open('.claude-plugin/plugin.json'))['version'])")
+          v3=$(python3 -c "import json;print(json.load(open('.claude-plugin/marketplace.json'))['version'])")
+          v4=$(python3 -c "import json;print(json.load(open('.claude-plugin/marketplace.json'))['plugins'][0]['version'])")
+          [ "$v1" = "$v2" ] && [ "$v1" = "$v3" ] && [ "$v1" = "$v4" ] || { echo "FAIL: version mismatch across manifests ($v1 / $v2 / $v3 / $v4)"; exit 1; }
+          echo "manifests in sync: $v1"
+
+      - name: Check changelog discipline
+        run: |
+          test -f CHANGELOG.md || { echo "FAIL: CHANGELOG.md missing"; exit 1; }
+          grep -q '## \[Unreleased\]' CHANGELOG.md && echo "changelog has an Unreleased section" || echo "WARN: no [Unreleased] section — fine right after a release"
+          for f in skills/*/SKILL.md; do
+            v=$(awk '/^  version:/{sub(/^  version: */,""); print; exit}' "$f")
+            [ -n "$v" ] || { echo "FAIL $f: missing metadata.version"; exit 1; }
+          done
+          grep -oE '^- `[a-z-]+` \(.*\)' CHANGELOG.md >/dev/null 2>&1 || true

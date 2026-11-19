@@ -4,7 +4,7 @@ description: "Trigger: SDLC, what stage, full lifecycle, new feature, new projec
 license: Apache-2.0
 metadata:
   author: luchop
-  version: "1.0"
+  version: "1.1"
 ---
 
 ## Activation Contract
@@ -17,6 +17,7 @@ Load when the user starts new work with no clear stage ("build X", "we want Y"),
 - One stage per request unless the user explicitly asks to continue.
 - Every artifact lands in the product repo at the path defined in `references/pipeline.md`.
 - If a gate fails, report the gap and stop — do not fabricate the missing artifact silently.
+- Rework is routing: when a later stage invalidates an earlier artifact, route back to that stage, fix it, and re-verify every downstream Output Contract that cited it.
 - Stage skills own their methodology; never inline their templates here.
 
 ## Decision Gates
@@ -27,20 +28,23 @@ Load when the user starts new work with no clear stage ("build X", "we want Y"),
 | Approved discovery brief | `prd` | PRD |
 | Approved PRD, user-facing UI | `ux-ui` | UX spec |
 | UX approved, or PRD approved with no UI | `rfc` | technical design |
-| RFC needs a significant choice | `adr` | decision record |
+| A significant choice arises at any stage | `adr` | decision record |
 | RFC approved, data involved | `erd` | data model + migrations |
 | RFC approved, external contract | `api-design` | OpenAPI spec |
 | Design done, before implementation | `security` | threat model |
 | Threat model done / pre-merge | `qa` | test plan |
 | Tests green, pre-production | `release` | release plan + runbook |
 
+A feature may need BOTH `erd` and `api-design`: run each that applies, in either order, before moving to `security`.
+
 ## Execution Steps
 
-1. Scan the product repo (`docs/`, `decisions/`) for existing stage artifacts.
-2. Map current state to the table above; state which stage is next and why.
-3. Load that stage's `SKILL.md` and execute its steps verbatim.
-4. Verify the stage's Output Contract checklist passes.
-5. Report: stage completed, artifact path, gate status, and the next stage.
+1. Identify the feature-slug in scope; if several features are in flight, ask which one before scanning.
+2. Scan `docs/` and `decisions/` for its artifacts. An artifact counts only if it exists AND names a human approver.
+3. Map current state to the table above; state which stage is next and why.
+4. Load that stage's `SKILL.md` and execute its steps verbatim.
+5. Verify the stage's Output Contract checklist passes.
+6. Report: stage completed, artifact path, gate status, and the next stage.
 
 ## Output Contract
 
